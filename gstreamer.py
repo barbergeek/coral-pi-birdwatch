@@ -59,9 +59,10 @@ def detectCoralDevBoard():
   return False
 
 def run_pipeline(user_function,
-                 src_size=(640,480),
+                 src_size=(1024,768),
                  appsink_size=(320, 180)):
-    PIPELINE = 'v4l2src device=/dev/video0 ! {src_caps} ! {leaky_q}  ! tee name=t'
+    PIPELINE = 'rtspsrc location=rtsp://yi-hack-v4/ch0_0.h264 latency=1000 ! {src_caps} ! {leaky_q}  ! tee name=t'
+#    PIPELINE = 'playbin uri=rtsp://yi-hack-v4/ch0_0.h264 ! {src_caps} ! {leaky_q}  ! tee name=t'
     if detectCoralDevBoard():
         SRC_CAPS = 'video/x-raw,format=YUY2,width={width},height={height},framerate=30/1'
         PIPELINE += """
@@ -71,7 +72,8 @@ def run_pipeline(user_function,
                ! rsvgoverlay name=overlay ! waylandsink
         """
     else:
-        SRC_CAPS = 'video/x-raw,width={width},height={height},framerate=30/1'
+        SRC_CAPS = 'decodebin'
+#        SRC_CAPS = 'video/x-raw,width={width},height={height},framerate=30/1'
         PIPELINE += """
             t. ! {leaky_q} ! videoconvert ! videoscale ! {sink_caps} ! {sink_element}
             t. ! {leaky_q} ! videoconvert
