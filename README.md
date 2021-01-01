@@ -1,5 +1,5 @@
-# Coral Smart Birdfeeder
-A smart birdfeeder that uses the Coral Enterprise Board + Camera module,
+# Coral Smart Birdfeeder (Raspberry PI version)
+(forked from a project that built) A smart birdfeeder that uses the Coral Enterprise Board + Camera module,
 and identifies the birds that use the feeder. It also implements a deterrent
 for any visiting squirrels.
 
